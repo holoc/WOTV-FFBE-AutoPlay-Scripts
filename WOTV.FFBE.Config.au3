@@ -21,11 +21,13 @@ Opt("PixelCoordMode", 2)
 
 Global $roomNumberCode = ""
 
-Global $hostWindowName = "NoxPlayer"
+;Global $hostWindowName = "(MEmu - Phantom Brig)"
+Global $hostWindowName = "(MEmu - Adelard)"
+;Global $hostWindowName = "(MEmu - Loc)"
 Global $slave01WindowName = ""
 Global $slave02WindowName = ""
 Global $slave03WindowName = ""
 
 Global $memuUseSync = True ;to code at a later point
 
-Global $playerName = "Loc"
+Global $playerName = "Seymore"

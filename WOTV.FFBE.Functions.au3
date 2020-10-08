@@ -64,22 +64,42 @@ Func StartWOTV($emuInstance = "NoxPlayer")
 EndFunc
 
 Func PixelCheckColor($xCoordToCheck = 0, $yCoordToCheck = 0, $decPixelColorToSearch = 0x000000, $xCoordToMouseClick = $xCoordToCheck, _
-	$yCoordToMouseClick = $yCoordToCheck, $delayTimeInMSec = 250)
+	$yCoordToMouseClick = $yCoordToCheck, $delayTimeInMSec = 250, _
+	$x2CoordToCheck = 0, $y2CoordToCheck = 0, $dec2PixelColorToSearch = 0x000000, $x2CoordToMouseClick = 0, $y2CoordToMouseClick = 0)
+	; Second parameters are for pop-up screens
+
+	; Check specified pixels until there is a color match
 	Do
 		Sleep($delayTimeInMSec)
-		Local $buttonColorValue = PixelGetColor($xCoordToCheck, $yCoordToCheck)
-	Until $buttonColorValue == $decPixelColorToSearch
+		Local $pixelColorCurrentValue = StringTrimRight(PixelGetColor($xCoordToCheck, $yCoordToCheck), 3)
+		Local $pixelColorCurrentValue2 = StringTrimRight(PixelGetColor($x2CoordToCheck, $y2CoordToCheck), 3) ; there's probably an easier way to evaluate multiple conditions...but this will have to do
+	Until $pixelColorCurrentValue == StringTrimRight($decPixelColorToSearch,3) Or $pixelColorCurrentValue2 == StringTrimRight($dec2PixelColorToSearch,3)
+
+	; Once a color match is found, left-mouse click at specified xy coord location
 	Do
-		MouseClick("left", $xCoordToMouseClick, $yCoordToMouseClick)
-		Sleep($delayTimeInMSec)
-		$buttonColorValue = PixelGetColor($xCoordToCheck, $yCoordToCheck)
-	Until $buttonColorValue <> $decPixelColorToSearch
+		If $pixelColorCurrentValue2 == StringTrimRight($dec2PixelColorToSearch, 3) Then
+			Sleep($delayTimeInMSec*2)
+			MouseClick("left", $x2CoordToMouseClick, $y2CoordToMouseClick)
+			Sleep($delayTimeInMSec)
+			$pixelColorCurrentValue2 = StringTrimRight(PixelGetColor($x2CoordToCheck, $y2CoordToCheck), 3)
+			; Followed by first set of parameters
+			Sleep($delayTimeInMSec*2)
+			MouseClick("left", $xCoordToMouseClick, $yCoordToMouseClick)
+			Sleep($delayTimeInMSec)
+			$pixelColorCurrentValue = StringTrimRight(PixelGetColor($xCoordToCheck, $yCoordToCheck), 3)
+		ElseIf $pixelColorCurrentValue == StringTrimRight($decPixelColorToSearch, 3) Then
+			Sleep($delayTimeInMSec*2)
+			MouseClick("left", $xCoordToMouseClick, $yCoordToMouseClick)
+			Sleep($delayTimeInMSec)
+			$pixelColorCurrentValue = StringTrimRight(PixelGetColor($xCoordToCheck, $yCoordToCheck), 3)
+		EndIf
+	Until $pixelColorCurrentValue <> StringTrimRight($decPixelColorToSearch, 3) Or $pixelColorCurrentValue2 <> StringTrimRight($dec2PixelColorToSearch, 3)
 EndFunc
 
 Func PixelCheckColorBool($xCoordToCheck = 0, $yCoordToCheck = 0, $decPixelColorToSearch = 0x000000)
 	Sleep(250)
-	Local $buttonColorValue = PixelGetColor($xCoordToCheck, $yCoordToCheck)
-	If $buttonColorValue == $decPixelColorToSearch Then
+	Local $pixelColorCurrentValue = PixelGetColor($xCoordToCheck, $yCoordToCheck)
+	If $pixelColorCurrentValue == $decPixelColorToSearch Then
 		Return True
 	Else
 		Return False
@@ -120,6 +140,6 @@ Func GetRoomNumber($xCoordToCheck = 0, $yCoordToCheck = 0, $decPixelColorToSearc
 	Return $roomNumberCode
 EndFunc
 
-Func MyExit()
+Func _Terminate()
     Exit
-EndFunc   ;==>MyExit
+EndFunc   ;==>_Terminate

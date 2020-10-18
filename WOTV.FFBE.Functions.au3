@@ -16,6 +16,7 @@ Game Settings:
 	Contains the functions required for this AutoIT script to work.
 
 #ce -----------------------------------------------------------------------------------
+#include <Process.au3>
 
 Func CleanCacheWOTV($emuInstance = "NoxPlayer")
 	; Selects the Android emulator window, in this case mine is called "NoxPlayer"
@@ -138,6 +139,11 @@ Func GetRoomNumber($xCoordToCheck = 0, $yCoordToCheck = 0, $decPixelColorToSearc
 	Sleep($delayTimeInMSec)
 	Local $roomNumberCode = ClipGet()
 	Return $roomNumberCode
+EndFunc
+
+Func SendInputTap($xCoord, $yCoord, $MemuVMSInstance = $hostMemuVMSInstance)
+	Local $sDOSEXEFilePath = '"C:\Program Files\Microvirt\MEmu\memuc.exe" -i ' & $MemuVMSInstance & ' adb shell input tap ' & $xCoord & ' ' & $yCoord
+	_RunDOS($sDOSEXEFilePath)
 EndFunc
 
 Func _Terminate()

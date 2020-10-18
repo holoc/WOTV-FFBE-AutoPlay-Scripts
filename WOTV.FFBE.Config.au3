@@ -21,8 +21,9 @@ Opt("PixelCoordMode", 2)
 
 Global $roomNumberCode = ""
 
-;Global $hostWindowName = "(MEmu - Phantom Brig)"
-Global $hostWindowName = "(MEmu - Adelard)"
+Global $hostWindowName = "(MEmu - Phantom Brig)" ;3
+;Global $hostWindowName = "(MEmu - Adelard)" ;5
+Global $hostMemuVMSInstance = 3 ;Use "./memuc listvms -s" to determine which # instance your targetted
 ;Global $hostWindowName = "(MEmu - Loc)"
 Global $slave01WindowName = ""
 Global $slave02WindowName = ""

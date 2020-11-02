@@ -1,6 +1,6 @@
 #cs -----------------------------------------------------------------------------------
 
- Script Version: 0.1.0
+ Script Version: 0.2.0
  AutoIt Version: 3.3.14.5
  Author:         holoc
  Platform:		 Windows 10 running NoxPlayer (Android 7.1.2)
@@ -16,7 +16,14 @@ Game Settings:
 	Contains the functions required for this AutoIT script to work.
 
 #ce -----------------------------------------------------------------------------------
-#include <Process.au3>
+
+#include <Process.au3> ; needed for _RunDOS()
+#include <WinAPI.au3>
+#include <WOTV.FFBE.Config.au3>
+
+Func _Terminate()
+    Exit
+EndFunc   ;==>_Terminate
 
 Func CleanCacheWOTV($emuInstance = "NoxPlayer")
 	; Selects the Android emulator window, in this case mine is called "NoxPlayer"
@@ -97,7 +104,8 @@ Func PixelCheckColor($xCoordToCheck = 0, $yCoordToCheck = 0, $decPixelColorToSea
 	Until $pixelColorCurrentValue <> StringTrimRight($decPixelColorToSearch, 3) Or $pixelColorCurrentValue2 <> StringTrimRight($dec2PixelColorToSearch, 3)
 EndFunc
 
-Func PixelCheckColorBool($xCoordToCheck = 0, $yCoordToCheck = 0, $decPixelColorToSearch = 0x000000)
+Func PixelCheckColorBool_PixelGetColor($xCoordToCheck = 0, $yCoordToCheck = 0, $decPixelColorToSearch = 0x000000)
+	; Old method based on PixelGetColor(), which required the window to be active in order for the script to work.
 	Sleep(250)
 	Local $pixelColorCurrentValue = PixelGetColor($xCoordToCheck, $yCoordToCheck)
 	If $pixelColorCurrentValue == $decPixelColorToSearch Then
@@ -141,11 +149,36 @@ Func GetRoomNumber($xCoordToCheck = 0, $yCoordToCheck = 0, $decPixelColorToSearc
 	Return $roomNumberCode
 EndFunc
 
+Func MemoryReadPixel($x, $y, $handle)
+	; Function Reference: https://www.autoitscript.com/forum/topic/136347-solved-pixelgetcolor-in-a-background-window/?do=findComment&comment=953351
+	; MemoryReadPixel() Function replaces PixelGetColor() as does not require the target window to be active in order to gather pixel information.
+	; This function is also much faster than PixelGetColor() when using the test case in above reference.
+
+	Local $hDC
+	Local $iColor
+	Local $sColor
+
+	$hDC = _WinAPI_GetWindowDC($handle)
+	$iColor = DllCall("gdi32.dll", "int", "GetPixel", "int", $hDC, "int", $x, "int", $y)
+	$sColor = Hex($iColor[0], 6)
+	_WinAPI_ReleaseDC($handle, $hDC)
+
+	Return Hex("0x" & StringRight($sColor, 2) & StringMid($sColor, 3, 2) & StringLeft($sColor, 2))
+EndFunc
+
+Func PixelCheckColorBool($xCoordToCheck = 0, $yCoordToCheck = 0, $decPixelColorToSearch = 0x000000)
+	Sleep(250)
+	Local $pixelColorCurrentValue = MemoryReadPixel($xCoordToCheck, $yCoordToCheck, $windowHandle)
+	If $pixelColorCurrentValue == hex($decPixelColorToSearch) Then
+		Return True
+	Else
+		Return False
+	EndIf
+EndFunc
+
 Func SendInputTap($xCoord, $yCoord, $MemuVMSInstance = $hostMemuVMSInstance)
+	; Use this function in place of AutoIt's MouseClick() function as it directly sends Input Tap commands to the Memu Emulator Instance, which
+	; means that the target window does not have to be actively selected for sent touch commands to work.
 	Local $sDOSEXEFilePath = '"C:\Program Files\Microvirt\MEmu\memuc.exe" -i ' & $MemuVMSInstance & ' adb shell input tap ' & $xCoord & ' ' & $yCoord
 	_RunDOS($sDOSEXEFilePath)
 EndFunc
-
-Func _Terminate()
-    Exit
-EndFunc   ;==>_Terminate

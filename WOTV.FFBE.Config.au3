@@ -1,6 +1,6 @@
 #cs ----------------------------------------------------------------------------
 
- Script Version: 0.1.0
+ Script Version: 0.2.0
  AutoIt Version: 3.3.14.5
  Author:         holoc
  Platform:		 Windows 10 running MEMU Play (Android 7)
@@ -21,14 +21,15 @@ Opt("PixelCoordMode", 2)
 
 Global $roomNumberCode = ""
 
-Global $hostWindowName = "(MEmu - Phantom Brig)" ;3
-;Global $hostWindowName = "(MEmu - Adelard)" ;5
-Global $hostMemuVMSInstance = 3 ;Use "./memuc listvms -s" to determine which # instance your targetted
-;Global $hostWindowName = "(MEmu - Loc)"
+;Global $hostWindowName = "(MEmu - Phantom Brig)" ;3
+Global $hostWindowName = "(MEmu - Adelard)" ;5
+Global $windowHandle = WinGetHandle($hostwindowName)
+
+Global $hostMemuVMSInstance = 5 ;Use "./memuc listvms -s" to determine which # instance your targetted
 Global $slave01WindowName = ""
 Global $slave02WindowName = ""
 Global $slave03WindowName = ""
 
 Global $memuUseSync = True ;to code at a later point
 
-Global $playerName = "Seymore"
+Global $playerName = ""

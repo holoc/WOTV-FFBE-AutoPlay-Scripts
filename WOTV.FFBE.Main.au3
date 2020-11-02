@@ -1,6 +1,6 @@
 #cs ----------------------------------------------------------------------------
 
- Script Version: 0.1.0
+ Script Version: 0.2.0
  AutoIt Version: 3.3.14.5
  Author:         holoc
  Platform:		 Windows 10 running MEMU Play (Android 7)
@@ -13,5 +13,4 @@
 #ce ----------------------------------------------------------------------------
 
 #include <AutoItConstants.au3>
-#include <WOTV.FFBE.Config.au3>
 #include <WOTV.FFBE.Functions.au3>

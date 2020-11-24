@@ -72,9 +72,9 @@ While 1
 	Sleep($timeout)
 
 	; Screens: Experience/Gil, Acquired Items
-	; Trigger Condition: Red part of Quartet
+	; Trigger Condition: Medium Brown of Title Bar
 	; Action: ; Click on 'Next' / 'Return' button
-	If PixelCheckColorBool(130, 71, 0xC6631A) Then
+	If PixelCheckColorBool(780, 80, 0x362E26) Then
 		SendInputTap(1070, 680)
 	EndIf
 	Sleep($timeout)
@@ -87,6 +87,10 @@ While 1
 	; Screen: 'Date Change - A new day has begun' Popup
 	; Trigger Condition: Blue color of 'Return to Title Screen' button
 	; Action: Click 'Return to Title Screen' button
-;TODO
+;	If PixelCheckColorBool(450, 400, 0x140446) Then
+;		SendInputTap(620, 520)
+;		Sleep(1500)
+;	EndIf
+
 
 WEnd

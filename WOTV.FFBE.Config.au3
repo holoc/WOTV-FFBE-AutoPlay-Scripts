@@ -13,7 +13,7 @@
 #ce ----------------------------------------------------------------------------
 
 ; Require this for Windows 10 for script to work, not sure if it applies to other OSes.
-#RequireAdmin
+;#RequireAdmin
 
 ; Sets the relative coords used in the mouse/pixel functions to the active window
 Opt("MouseCoordMode", 2)
@@ -21,11 +21,12 @@ Opt("PixelCoordMode", 2)
 
 Global $roomNumberCode = ""
 
-;Global $hostWindowName = "(MEmu - Phantom Brig)" ;3
-Global $hostWindowName = "(MEmu - Adelard)" ;5
+
+Global $hostWindowName = "(MEmu1)" ;1
+;Global $hostWindowName = "(MEmu2)" ;2
 Global $windowHandle = WinGetHandle($hostwindowName)
 
-Global $hostMemuVMSInstance = 5 ;Use "./memuc listvms -s" to determine which # instance your targetted
+Global $hostMemuVMSInstance = 1 ;Use "./memuc listvms -s" to determine which # instance your targetted
 Global $slave01WindowName = ""
 Global $slave02WindowName = ""
 Global $slave03WindowName = ""

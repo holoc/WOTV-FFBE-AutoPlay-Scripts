@@ -1,6 +1,6 @@
 #cs -----------------------------------------------------------------------------------
 
- Script Version: 0.2.0
+ Script Version: 0.2.1
  AutoIt Version: 3.3.14.5
  Author:         holoc
  Platform:		 Windows 10 running Memu(Android 7.1, 64bit)
@@ -8,13 +8,13 @@
  Memu System Settings
 
  Engine
-	Performance: Preset settings - Top (CPU:4, RAM:4096MB)
+	Performance: Preset settings - Top (CPU:2, RAM:2048MB)
 	Render mode: OpenGL
 	Root mode: ON
 	GPU memory optimization: OFF
 
  Display
-	Resolution: Tablet(1280*720 192dpi)
+	Resolution: Tablet [1280*720 (240dpi)]
 	Frame rate: 30 FPS
 	Anti-Flickering: ON
 
@@ -26,10 +26,6 @@
 	Script will be triggered once in a Multi-Event session.
 	When in waiting in the Multi-Event room...
 	Click 'Ready' button, then wait for host to Embark (unless you are the host, then you click the 'Embark' button)
-
-Current Limitations:
-	- Memu Emulator window must be actively selected once the program runs (you can resume by making the Memu window active again)
-
 
 #ce -----------------------------------------------------------------------------------
 
@@ -60,8 +56,8 @@ While 1
 
 	; Screen: Friend Requests
 	; Trigger Condition: Dark brown background bar of the Player's Name / Rank Level
-	; Action: Click on 'Cancel' button, then click on 'Return' button
-	If PixelCheckColorBool(400, 150, 0x332B29) Then
+	; Action: ; Click on 'Cancel' button, then click on 'Return' button
+	If PixelCheckColorBool(400, 155, 0x342C29) Then
 		Sleep(250)
 		; 'Cancel' button
 		SendInputTap(500, 630)
@@ -69,7 +65,7 @@ While 1
 ;TODO create a loop		; 'Return' button
 		SendInputTap(1060, 660)
 	EndIf
-	Sleep($timeout)
+;	Sleep($timeout)
 
 	; Screens: Experience/Gil, Acquired Items
 	; Trigger Condition: Medium Brown of Title Bar

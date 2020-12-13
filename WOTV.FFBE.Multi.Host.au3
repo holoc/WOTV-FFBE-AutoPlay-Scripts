@@ -1,20 +1,20 @@
 #cs -----------------------------------------------------------------------------------
 
- Script Version: 0.1.0
+ Script Version: 0.2.1
  AutoIt Version: 3.3.14.5
  Author:         holoc
- Platform:		 Windows 10 running Memu(Android 7.1, 64bit, Microvirt Version 7.2.2)
+ Platform:		 Windows 10 running Memu(Android 7.1, 64bit)
 
  Memu System Settings
 
  Engine
-	Performance: Preset settings - Top (CPU:4, RAM:4096MB)
+	Performance: Preset settings - Top (CPU:2, RAM:2048MB)
 	Render mode: OpenGL
 	Root mode: ON
 	GPU memory optimization: OFF
 
  Display
-	Resolution: Tablet(1280*720 192dpi)
+	Resolution: Tablet [1280*720 (240dpi)]
 	Frame rate: 30 FPS
 	Anti-Flickering: ON
 
@@ -24,10 +24,6 @@
  Script Function:
 	Basic AutoIt script for FFBE WOTV Multi-Events as the HOST.
 	Script can be triggered anywhere in the process of a Multi-Event session.
-
-Current Limitations:
-	- Memu Emulator window must be actively selected once the program runs (you can resume by making the Memu window active again)
-
 
 #ce -----------------------------------------------------------------------------------
 
@@ -53,15 +49,16 @@ While 1
 	; Action: Click 'Embark' button
 	If PixelCheckColorBool(840, 500, 0x4101A4) Then
 		SendInputTap(1100, 660)
-		Sleep(200)
+		Sleep(300)
+		SendInputTap(700, 540)
 	EndIf
 ;	Sleep($timeout)
 
 	; Screen: 'Confirm Embark - Not all players present. Embark anyway?' Popup
 	; Trigger Condition: Blue color of 'Embark' button
 	; Action: Click 'Embark' button
-	If PixelCheckColorBool(542, 421, 0x432EF5) Then
-		SendInputTap(760, 520)
+	If PixelCheckColorBool(603, 398, 0x140446) Then
+		SendInputTap(700, 540)
 	EndIf
 ;	Sleep($timeout)
 
@@ -111,7 +108,7 @@ While 1
 	; Screen: First Time Completion Rewards
 	; Trigger Condition: Dark Brown of Visiore x50 background (near middle point)
 	; Action: Click 'Next' button
-	If PixelCheckColorBool(460, 120, 0x40372F) Then
+	If PixelCheckColorBool(700, 124, 0x413930) Then
 		Sleep(1000)
 		SendInputTap(1070, 670)
 		Sleep(100)
@@ -122,7 +119,7 @@ While 1
 	; Screen: Experience/Gil
 	; Trigger Condition: Yellow/orange of the Gil coin icon
 	; Action: Click 'Next' button
-	If PixelCheckColorBool(533, 126, 0xE8C33B) Then
+	If PixelCheckColorBool(699, 126, 0xE8C33B) Then
 		Sleep(1500)
 		SendInputTap(1070, 670)
 		Sleep(100)
@@ -134,7 +131,7 @@ While 1
 	; Screen: Friend Requests
 	; Trigger Condition: Dark brown background bar of the Player's Name / Rank Level
 	; Action: ; Click on 'Cancel' button, then click on 'Return' button
-	If PixelCheckColorBool(400, 150, 0x332B29) Then
+	If PixelCheckColorBool(400, 155, 0x342C29) Then
 		Sleep(250)
 		; 'Cancel' button
 		SendInputTap(500, 630)

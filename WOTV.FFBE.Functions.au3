@@ -1,75 +1,38 @@
 #cs -----------------------------------------------------------------------------------
 
- Script Version: 0.2.0
+ Script Version: 0.2.1
  AutoIt Version: 3.3.14.5
  Author:         holoc
- Platform:		 Windows 10 running NoxPlayer (Android 7.1.2)
- Perofrmance settings: High (4 Core CPU, 4096 MB Memory)
- Graphics rendering mode: Speed (DirectX)
- Resolution setting:
-	Resolution - Tablet(960x540)
-	Window size - Width 960, Height 540, DPI 160
-Game Settings:
-	Frame settings: 30 FPS
-	Mouse accelration: Turn off mouse acceleration in Windows
+ Platform:		 Windows 10 running Memu(Android 7.1, 64bit)
+
+ Memu System Settings
+
+ Engine
+	Performance: Preset settings - Top (CPU:2, RAM:2048MB)
+	Render mode: OpenGL
+	Root mode: ON
+	GPU memory optimization: OFF
+
+ Display
+	Resolution: Tablet [1280*720 (240dpi)]
+	Frame rate: 30 FPS
+	Anti-Flickering: ON
+
+ Window layout (found under Multiple Instance Manager window -> Layout button)
+	Window size - Customize - Width 960, Height 540
+
  Script Function:
-	Contains the functions required for this AutoIT script to work.
+	This script contains the functions required for this WOTV AutoIT script to work.
 
 #ce -----------------------------------------------------------------------------------
 
-#include <Process.au3> ; needed for _RunDOS()
+#include <Process.au3> ; Needed for _RunDOS()
 #include <WinAPI.au3>
 #include <WOTV.FFBE.Config.au3>
 
 Func _Terminate()
     Exit
 EndFunc   ;==>_Terminate
-
-Func CleanCacheWOTV($emuInstance = "NoxPlayer")
-	; Selects the Android emulator window, in this case mine is called "NoxPlayer"
-	WinActivate($emuInstance)
-	WinWaitActive($emuInstance)
-
-	; TEMP FIX for WOTV startup crashes: Use a recorded macro for CLEAR CACHE of WOTV FFBE app
-	Sleep(250)
-	Send("^4")
-	WinWaitActive("nox")
-	Sleep(450)
-	; Click on the Macro Play button for clearing WOTV app cache.
-	MouseClick("left", 422, 138)
-	Sleep(450)
-	WinClose("nox")
-
-EndFunc
-
-Func StartWOTV($emuInstance = "NoxPlayer")
-	; Selects the Android emulator window
-	WinActivate($emuInstance)
-	Sleep(250)
-
-	; Starts WOTV Application using the Google Search bar on the Home Screen to search for WOTV app
-	;MouseClick("left", 485, 558)
-	;Sleep(250)
-	;Send("WOTV{Enter}")
-	;Sleep(500)
-	;MouseClick("left", 57, 166)
-
-	; Starts WOTV Application using shortcut icon on Smart Search Launcher
-	; MouseClick("left", 545, 406)
-
-	; Starts WOTV Application using shortcut icon on Nox Launcher
-	MouseClick("left", 678, 190)
-
-	; Clicks the Touch To Start area to enter WOTV
-	MouseMove(470, 490, 1)
-	PixelCheckColorInArea(470, 490, 510, 500, 0xC7CAE8, 10, 500, 500)
-
-	; Skip over intro video
-	Sleep(2000)
-	MouseClick("left", 500, 500)
-	Sleep(2500)
-	PixelCheckColorInArea(470, 490, 510, 500, 0xC7CAE8, 10, 500, 500)
-EndFunc
 
 Func PixelCheckColor($xCoordToCheck = 0, $yCoordToCheck = 0, $decPixelColorToSearch = 0x000000, $xCoordToMouseClick = $xCoordToCheck, _
 	$yCoordToMouseClick = $yCoordToCheck, $delayTimeInMSec = 250, _
@@ -179,6 +142,15 @@ EndFunc
 Func SendInputTap($xCoord, $yCoord, $MemuVMSInstance = $hostMemuVMSInstance)
 	; Use this function in place of AutoIt's MouseClick() function as it directly sends Input Tap commands to the Memu Emulator Instance, which
 	; means that the target window does not have to be actively selected for sent touch commands to work.
-	Local $sDOSEXEFilePath = '"C:\Program Files\Microvirt\MEmu\memuc.exe" -i ' & $MemuVMSInstance & ' adb shell input tap ' & $xCoord & ' ' & $yCoord
+	Local $sDOSEXEFilePath = '"C:\Program Files\Microvirt\MEmu\memuc.exe" -i ' & $MemuVMSInstance & ' adb shell input tap ' & $xCoord & ' ' & $yCoord & @CRLF
 	_RunDOS($sDOSEXEFilePath)
 EndFunc
+
+	; Screen: 'Date Change - A new day has begun' Popup
+	; Trigger Condition: Blue color of 'Return to Title Screen' button
+	; Action: Click 'Return to Title Screen' button
+;TODO
+	;If PixelCheckColorBool(450, 400, 0x140446) Then
+	;	SendInputTap(620, 520)
+	;	Sleep(1500)
+	;EndIf

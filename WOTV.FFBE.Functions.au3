@@ -26,6 +26,7 @@
 
 #ce -----------------------------------------------------------------------------------
 
+#include <Constants.au3>
 #include <Process.au3> ; Needed for _RunDOS()
 #include <WinAPI.au3>
 #include <WOTV.FFBE.Config.au3>
@@ -143,7 +144,10 @@ Func SendInputTap($xCoord, $yCoord, $MemuVMSInstance = $hostMemuVMSInstance)
 	; Use this function in place of AutoIt's MouseClick() function as it directly sends Input Tap commands to the Memu Emulator Instance, which
 	; means that the target window does not have to be actively selected for sent touch commands to work.
 	Local $sDOSEXEFilePath = '"C:\Program Files\Microvirt\MEmu\memuc.exe" -i ' & $MemuVMSInstance & ' adb shell input tap ' & $xCoord & ' ' & $yCoord & @CRLF
-	_RunDOS($sDOSEXEFilePath)
+
+	Run($sDOSEXEFilePath,"",@SW_HIDE)
+	;Run($sDOSEXEFilePath,"",@SW_HIDE, $STDIN_CHILD + $STDOUT_CHILD)
+	ConsoleWrite ( "input tap" & ' ' & $xCoord & ' ' & $yCoord & @CRLF)
 EndFunc
 
 	; Screen: 'Date Change - A new day has begun' Popup

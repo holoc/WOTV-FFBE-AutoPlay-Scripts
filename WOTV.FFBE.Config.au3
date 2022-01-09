@@ -1,36 +1,72 @@
-#cs ----------------------------------------------------------------------------
+#cs -----------------------------------------------------------------------------------
 
  Script Version: 0.2.0
  AutoIt Version: 3.3.14.5
  Author:         holoc
- Platform:		 Windows 10 running MEMU Play (Android 7)
- Display Settings:
-	Resolution - Tablet(1280*720, 192dpi), Frame rate(60 FPS), Anti-Flickering(ON)
-	Window size - Width(836), Height(480)
+ Platform:		 Windows 10 running BlueStacks v5.5.10.1001 (Android Pie 64-bit (Beta))
+
+ BlueStacks Settings
+
+  Performance
+	CPU allocation: Medium (2 Cores)
+	Memory allocation: High (4 GB)
+	Performance mode: Low Memory
+	Frame rate: 30
+	Enable high frame rate: OFF
+	Enable VSync (to prevent screen tearing): OFF
+	Display FPS during gameplay: OFF
+
+  Display
+	Display resolution: 960 x 540
+	Pixel density: 240 DPI (Medium)
+	Mouse cursor style: BlueStacks
+
+  Graphics
+	Graphics renderer: OpenGL
+	Interface renderer: Auto
+	ASTC textures (Beta): Hardware decoding
+	GPU in use - NVIDIA GeForce GTX 1070/PCIe/SSE2
+	Prefer dedicated GPU: YES
+
+  Advanced
+	Application binary interface (ABI) - x86 32-bit, x86 64-bit, ARM 32-bit, ARM 64-bit
+	Android debug bridge - Connect to Android at 127.0.0.1:####: ON
+	Input debugging - Show visual feedback for taps: ON
+					- Show pointer location for current touch data: ON
+
+  Instance manager settings
+	Disable audio for all instances (Reduces CPU usage): Checked
+	
+Window layout (found under Multiple Instance Manager window -> Layout button)
+	Window size - Customize - Width 960, Height 540
+
  Script Function:
-	Contains the configuration options fitted for your situation.
+	Contains the configuration options.
 
-#ce ----------------------------------------------------------------------------
+#ce -----------------------------------------------------------------------------------
 
-; Require this for Windows 10 for script to work, not sure if it applies to other OSes.
+; Depending on emulator/Windows settings, the following keyword may be required (uncomment to activate).
 ;#RequireAdmin
 
 ; Sets the relative coords used in the mouse/pixel functions to the active window
 Opt("MouseCoordMode", 2)
 Opt("PixelCoordMode", 2)
 
-Global $roomNumberCode = ""
+; Depending on the system/android emulator, this could be '127.0.0.1' or 'localhost' in order to connect ADB to the emulator instance
+;test adb connection in commandline to confirm which one works. Port # can be found in BS under Advanced Settings, ADB information.
+Global $adb_device_ip_address = "localhost"
+Global $adb_device_port = ""
 
-
-Global $hostWindowName = "(MEmu1)" ;1
-;Global $hostWindowName = "(MEmu2)" ;2
+; Name of the BlueStacks Instance. Can be found under the BlueStacks multi-instance manager or AutoIt Window Info tool.
+Global $hostWindowName = ""
 Global $windowHandle = WinGetHandle($hostwindowName)
 
-Global $hostMemuVMSInstance = 1 ;Use "./memuc listvms -s" to determine which # instance your targetted
-Global $slave01WindowName = ""
-Global $slave02WindowName = ""
-Global $slave03WindowName = ""
-
-Global $memuUseSync = True ;to code at a later point
-
+; Player Name used in logs.
 Global $playerName = ""
+
+; Multi Room Password provided in WOTV.
+; Eventually, this value be stored for passing along commands to multiple instances over ADB.
+Global $roomNumberCode = ""
+
+; Legacy Variables required for Memu emulator ADB commands
+Global $hostMemuVMSInstance = 1 ;Use "./memuc listvms -s" to determine which # instance your targetted

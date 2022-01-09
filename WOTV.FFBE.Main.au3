@@ -1,30 +1,49 @@
 #cs -----------------------------------------------------------------------------------
 
- Script Version: 0.2.1
+ Script Version: 0.2.0
  AutoIt Version: 3.3.14.5
  Author:         holoc
- Platform:		 Windows 10 running Memu(Android 7.1, 64bit)
+ Platform:		 Windows 10 running BlueStacks v5.5.10.1001 (Android Pie 64-bit (Beta))
 
- Memu System Settings
+ BlueStacks Settings
 
- Engine
-	Performance: Preset settings - Top (CPU:2, RAM:2048MB)
-	Render mode: OpenGL
-	Root mode: ON
-	GPU memory optimization: OFF
+  Performance
+	CPU allocation: Medium (2 Cores)
+	Memory allocation: High (4 GB)
+	Performance mode: Low Memory
+	Frame rate: 30
+	Enable high frame rate: OFF
+	Enable VSync (to prevent screen tearing): OFF
+	Display FPS during gameplay: OFF
 
- Display
-	Resolution: Tablet [1280*720 (240dpi)]
-	Frame rate: 30 FPS
-	Anti-Flickering: ON
+  Display
+	Display resolution: 960 x 540
+	Pixel density: 240 DPI (Medium)
+	Mouse cursor style: BlueStacks
 
- Window layout (found under Multiple Instance Manager window -> Layout button)
-	Window size - Customize - Width 960, Height 540
+  Graphics
+	Graphics renderer: OpenGL
+	Interface renderer: Auto
+	ASTC textures (Beta): Hardware decoding
+	GPU in use - NVIDIA GeForce GTX 1070/PCIe/SSE2
+	Prefer dedicated GPU: YES
+
+  Advanced
+	Application binary interface (ABI) - x86 32-bit, x86 64-bit, ARM 32-bit, ARM 64-bit
+	Android debug bridge - Connect to Android at 127.0.0.1:####: ON
+	Input debugging - Show visual feedback for taps: ON
+					- Show pointer location for current touch data: ON
+
+  Instance manager settings
+	Disable audio for all instances (Reduces CPU usage): Checked
 	
+Window layout (found under Multiple Instance Manager window -> Layout button)
+	Window size - Customize - Width 960, Height 540
+
  Script Function:
 	AutoIt script containing the includes to the main files.
 
-#ce ----------------------------------------------------------------------------
+#ce -----------------------------------------------------------------------------------
 
 #include <AutoItConstants.au3>
 #include <WOTV.FFBE.Functions.au3>
